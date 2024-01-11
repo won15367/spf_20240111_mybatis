@@ -14,7 +14,30 @@
 			freeboard(fbnum, fbname, fbtitle, fbcontent, fbhit)
 				VALUES (freeboard_seq.nextval, #{param1}, #{param2}, #{param3}, 0)
 	</insert>
+	
+	<select id="content_viewDao" resultType="com.won15367.mybatis.dto.FboardDto">
+		SELECT * FROM freeboard WHERE fbnum=#{param1}
+	</select>
+	
+	<update id="modifyDao">
+		UPDATE freeboard SET fbname=#{param1}, fbtitle=#{param2}, fbcontent=#{param3} WHERE fbnum=#{param4}
+	</update>
 
+	<delete id="deleteDao">
+		DELETE FROM freeboard WHERE fbnum=#{param1}
+	</delete>
+	
+	<select id="searchDao" resultType="com.won15367.mybatis.dto.FboardDto">
+		SELECT * FROM freeboard 
+			WHERE fbtitle LIKE '%'||#{param1}||'%' 
+				OR fbcontent LIKE '%'||#{param1}||'%'
+					ORDER BY fbnum DESC	
+	</select>
+	
+	<update id="uphitDao">
+		UPDATE freeboard SET fbhit=fbhit+1 WHERE fbnum=#{param1}
+	</update>
+	
 </mapper>    
     
     
